@@ -1,12 +1,13 @@
 {
   "name": "laser_safety",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "calculates safe laser eyewear parameters",
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "deploy": "parcel build index.html -d docs --no-source-maps"
   },
   "author": "Matt Grau <matt.grau@gmail.com>",
   "license": "MIT",
