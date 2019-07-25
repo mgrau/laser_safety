@@ -7,7 +7,7 @@
     "start": "parcel index.html",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "deploy": "parcel build index.html -d docs --no-source-maps"
+    "deploy": "parcel build index.html -d docs --no-source-maps --public-url ./"
   },
   "author": "Matt Grau <matt.grau@gmail.com>",
   "license": "MIT",
