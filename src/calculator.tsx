@@ -339,20 +339,20 @@ export default function Calculator(props) {
                     <Typography component="div">
                       The laser{" "}
                       {pulsed(values.mode, values.wavelength)
-                        ? "intensity"
-                        : "fluence"}
+                        ? "fluence"
+                        : "intensity"}{" "}
                       for a{" "}
                       {pulsed(values.mode, values.wavelength)
-                        ? "continous wave"
-                        : "pulsed"}{" "}
+                        ? "pulsed"
+                        : "continous wave"}{" "}
                       laser is calculated assuming a Gaussian beam profile,
                       <MathJax.Node
                         formula={`I = \\frac{2 P}{\\pi w^2} = \\frac{8 P}{\\pi d^2},`}
                       />
                       where <MathJax.Node inline formula={"P"} /> is the{" "}
                       {pulsed(values.mode, values.wavelength)
-                        ? "power"
-                        : "energy"}
+                        ? "energy"
+                        : "power"}
                       , and <MathJax.Node inline formula={"d = 2w"} /> is the{" "}
                       <MathJax.Node inline formula={"1/e^2"} /> diameter. This
                       value for <MathJax.Node inline formula={"d"} /> should be
@@ -388,12 +388,12 @@ export default function Calculator(props) {
                       <MathJax.Node inline formula={"\\text{OD}"} />) required
                       to attenuate the laser{" "}
                       {pulsed(values.mode, values.wavelength)
-                        ? "intensity"
-                        : "fluence"}{" "}
+                        ? "fluence"
+                        : "intensity"}{" "}
                       to the maximum safe{" "}
                       {pulsed(values.mode, values.wavelength)
-                        ? "intensity"
-                        : "fluence"}{" "}
+                        ? "fluence"
+                        : "intensity"}{" "}
                       can be calculated according to
                       <MathJax.Node
                         formula={`\\text{OD} = log_{10}\\left(\\frac{I}{I_\\text{safe}}\\right).`}
