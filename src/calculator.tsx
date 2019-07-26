@@ -1,4 +1,5 @@
 import React from "react";
+import queryString from "query-string";
 import MathJax from "react-mathjax";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Link from "@material-ui/core/Link";
 
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -36,11 +38,21 @@ const useStyles = makeStyles(theme => ({
 export default function Calculator(props) {
   const classes = useStyles(props);
 
+  const url = queryString.parse(location.search);
   const init = {
-    mode: MODE.ContinuousWave,
-    wavelength: 1064,
-    power: 100,
-    diameter: 1
+    mode: url.mode == undefined ? MODE.ContinuousWave : (url.mode as MODE),
+    wavelength:
+      url.wavelength == undefined || parseInt(url.wavelength as string) < 0
+        ? 1064
+        : parseInt(url.wavelength as string),
+    power:
+      url.power == undefined || parseInt(url.power as string) < 0
+        ? 100
+        : parseInt(url.power as string),
+    diameter:
+      url.diameter == undefined || parseInt(url.diameter as string) < 0
+        ? 1
+        : parseInt(url.diameter as string)
   };
 
   const pulsed = (mode: MODE, wavelength: number) => {
@@ -145,15 +157,15 @@ export default function Calculator(props) {
 
   const setLB = (rawLB: number) => {
     if (!isNaN(rawLB)) {
-    const LB = Math.max(0, rawLB);
-    const rawPower = maxPower(
-      unit(values.wavelength, "nm"),
-      LB,
-      unit(values.diameter, "mm"),
-      values.mode
-    ).toNumber(powerUnit(values.mode, values.wavelength));
-    const power = Number(rawPower.toPrecision(2));
-    setValues({ ...values, power: power, LB: LB });
+      const LB = Math.max(0, rawLB);
+      const rawPower = maxPower(
+        unit(values.wavelength, "nm"),
+        LB,
+        unit(values.diameter, "mm"),
+        values.mode
+      ).toNumber(powerUnit(values.mode, values.wavelength));
+      const power = Number(rawPower.toPrecision(2));
+      setValues({ ...values, power: power, LB: LB });
     } else {
       setValues({ ...values, LB: null });
     }
@@ -293,6 +305,24 @@ export default function Calculator(props) {
                 label="Goggle Rating"
                 value={values.LB == null ? "" : `${values.mode} LB${values.LB}`}
               />
+            </Grid>
+
+            <Grid item xs={12}>
+              Share{" "}
+              <Link
+                href={
+                  document.location.origin +
+                  "?" +
+                  queryString.stringify({
+                    mode: values.mode,
+                    wavelength: values.wavelength,
+                    power: values.power,
+                    diameter: values.diameter
+                  })
+                }
+              >
+                Link to Calculation
+              </Link>
             </Grid>
 
             <Grid item xs={12}>
