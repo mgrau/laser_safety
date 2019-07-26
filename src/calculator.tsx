@@ -170,7 +170,6 @@ export default function Calculator(props) {
             </Grid>
 
             <Grid item xs={6}>
-              <Tooltip title="Delete">
                 <Button
                   fullWidth
                   color="primary"
@@ -183,7 +182,6 @@ export default function Calculator(props) {
                 >
                   CW
                 </Button>
-              </Tooltip>
             </Grid>
             <Grid item xs={6}>
               <Button
