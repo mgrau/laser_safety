@@ -4,10 +4,10 @@
   "description": "calculates safe laser eyewear parameters",
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel src/index.html",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "deploy": "parcel build index.html -d docs --no-source-maps --public-url ./"
+    "deploy": "parcel build src/index.html -d ./ --no-source-maps --public-url ./"
   },
   "author": "Matt Grau <matt.grau@gmail.com>",
   "license": "MIT",
