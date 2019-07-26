@@ -144,15 +144,19 @@ export default function Calculator(props) {
   };
 
   const setLB = (rawLB: number) => {
+    if (!isNaN(rawLB)) {
     const LB = Math.max(0, rawLB);
     const rawPower = maxPower(
       unit(values.wavelength, "nm"),
       LB,
       unit(values.diameter, "mm"),
       values.mode
-    ).toNumber("mW");
+    ).toNumber(powerUnit(values.mode, values.wavelength));
     const power = Number(rawPower.toPrecision(2));
     setValues({ ...values, power: power, LB: LB });
+    } else {
+      setValues({ ...values, LB: null });
+    }
   };
 
   return (
