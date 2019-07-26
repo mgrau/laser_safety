@@ -311,7 +311,7 @@ export default function Calculator(props) {
               Share{" "}
               <Link
                 href={
-                  document.location.origin +
+                  queryString.parseUrl(document.location.href).url +
                   "?" +
                   queryString.stringify({
                     mode: values.mode,
