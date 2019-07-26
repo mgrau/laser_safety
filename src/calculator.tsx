@@ -102,6 +102,8 @@ export default function Calculator(props) {
       );
       const LB = minLB(unit(wavelength, "nm"), intensity, values.mode);
       setValues({ ...values, wavelength: wavelength, LB: LB });
+    } else {
+      setValues({ ...values, wavelength: -1 });
     }
   };
 
@@ -170,18 +172,16 @@ export default function Calculator(props) {
             </Grid>
 
             <Grid item xs={6}>
-                <Button
-                  fullWidth
-                  color="primary"
-                  variant={
-                    values.mode == MODE.ContinuousWave
-                      ? "contained"
-                      : "outlined"
-                  }
-                  onClick={() => setMode(MODE.ContinuousWave)}
-                >
-                  CW
-                </Button>
+              <Button
+                fullWidth
+                color="primary"
+                variant={
+                  values.mode == MODE.ContinuousWave ? "contained" : "outlined"
+                }
+                onClick={() => setMode(MODE.ContinuousWave)}
+              >
+                CW
+              </Button>
             </Grid>
             <Grid item xs={6}>
               <Button
@@ -224,7 +224,7 @@ export default function Calculator(props) {
                 variant="outlined"
                 label="Wavelength"
                 type="number"
-                value={values.wavelength}
+                value={values.wavelength < 0 ? "" : values.wavelength}
                 onChange={event =>
                   setWavelength(parseFloat(event.target.value))
                 }
@@ -307,10 +307,10 @@ export default function Calculator(props) {
                       {pulsed(values.mode, values.wavelength)
                         ? "intensity"
                         : "fluence"}
-                      for a
+                      for a{" "}
                       {pulsed(values.mode, values.wavelength)
                         ? "continous wave"
-                        : "pulsed"}
+                        : "pulsed"}{" "}
                       laser is calculated assuming a Gaussian beam profile,
                       <MathJax.Node
                         formula={`I = \\frac{2 P}{\\pi w^2} = \\frac{8 P}{\\pi d^2},`}
@@ -373,7 +373,7 @@ export default function Calculator(props) {
                       {values.mode == MODE.Modelocked
                         ? "mode-locked pulsed"
                         : ""}{" "}
-                      laser, it is
+                      laser, this is{" "}
                       <b>
                         {values.LB == null
                           ? "?"
