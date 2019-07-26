@@ -92,15 +92,17 @@ export default function Calculator(props) {
   };
 
   const setWavelength = (rawWavelength: number) => {
-    const wavelength = Math.max(0, rawWavelength);
-    const intensity = calculateIntensity(
-      values.mode,
-      wavelength,
-      values.power,
-      values.diameter
-    );
-    const LB = minLB(unit(wavelength, "nm"), intensity, values.mode);
-    setValues({ ...values, wavelength: wavelength, LB: LB });
+    if (!isNaN(rawWavelength)) {
+      const wavelength = Math.max(0, rawWavelength);
+      const intensity = calculateIntensity(
+        values.mode,
+        wavelength,
+        values.power,
+        values.diameter
+      );
+      const LB = minLB(unit(wavelength, "nm"), intensity, values.mode);
+      setValues({ ...values, wavelength: wavelength, LB: LB });
+    }
   };
 
   const setPower = (rawPower: number) => {
@@ -168,16 +170,20 @@ export default function Calculator(props) {
             </Grid>
 
             <Grid item xs={6}>
-              <Button
-                fullWidth
-                color="primary"
-                variant={
-                  values.mode == MODE.ContinuousWave ? "contained" : "outlined"
-                }
-                onClick={() => setMode(MODE.ContinuousWave)}
-              >
-                CW
-              </Button>
+              <Tooltip title="Delete">
+                <Button
+                  fullWidth
+                  color="primary"
+                  variant={
+                    values.mode == MODE.ContinuousWave
+                      ? "contained"
+                      : "outlined"
+                  }
+                  onClick={() => setMode(MODE.ContinuousWave)}
+                >
+                  CW
+                </Button>
+              </Tooltip>
             </Grid>
             <Grid item xs={6}>
               <Button
@@ -269,7 +275,7 @@ export default function Calculator(props) {
                 variant="outlined"
                 label="Optical Density"
                 type="number"
-                value={values.LB}
+                value={values.LB == null ? "" : values.LB}
                 onChange={event => setLB(parseFloat(event.target.value))}
                 InputProps={{
                   startAdornment: (
@@ -283,7 +289,7 @@ export default function Calculator(props) {
                 fullWidth
                 variant="outlined"
                 label="Goggle Rating"
-                value={`${values.mode} LB${values.LB}`}
+                value={values.LB == null ? "" : `${values.mode} LB${values.LB}`}
               />
             </Grid>
 
@@ -323,8 +329,8 @@ export default function Calculator(props) {
                       {pulsed(values.mode, values.wavelength)
                         ? "intensity"
                         : "fluence"}{" "}
-                      <MathJax.Node inline formula={"I_\\text{safe}"} />
-                      as specified by EN 207:2017. For a{" "}
+                      <MathJax.Node inline formula={"I_\\text{safe}"} /> as
+                      specified by EN 207:2017. For a{" "}
                       {values.mode == MODE.ContinuousWave ? "CW" : ""}
                       {values.mode == MODE.Pulsed ? "long pulsed" : ""}
                       {values.mode == MODE.GiantPulsed ? "pulsed" : ""}
@@ -335,11 +341,16 @@ export default function Calculator(props) {
                       {maxSafeIntensity(
                         unit(values.wavelength, "nm"),
                         values.mode
-                      ).toNumber(
-                        pulsed(values.mode, values.wavelength)
-                          ? "J/m^2"
-                          : "W/m^2"
-                      )}{" "}
+                      ) == null
+                        ? "?"
+                        : maxSafeIntensity(
+                            unit(values.wavelength, "nm"),
+                            values.mode
+                          ).toNumber(
+                            pulsed(values.mode, values.wavelength)
+                              ? "J/m^2"
+                              : "W/m^2"
+                          )}{" "}
                       {pulsed(values.mode, values.wavelength) ? "J/m²" : "W/m²"}
                       . The optical density (
                       <MathJax.Node inline formula={"\\text{OD}"} />) required
@@ -364,11 +375,12 @@ export default function Calculator(props) {
                       {values.mode == MODE.Modelocked
                         ? "mode-locked pulsed"
                         : ""}{" "}
-                      laser, it is{" "}
+                      laser, it is
                       <b>
-                        {values.mode} LB{values.LB}
+                        {values.LB == null
+                          ? "?"
+                          : `${values.mode} LB${values.LB}`}
                       </b>
-                      .
                     </Typography>
                   </MathJax.Provider>
                 </ExpansionPanelDetails>
