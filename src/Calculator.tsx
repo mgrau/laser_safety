@@ -1,6 +1,5 @@
 import React from "react";
 import queryString from "query-string";
-import MathJax from "react-mathjax";
 
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,7 +20,8 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { unit } from "mathjs";
-import { MODE, minLB, maxPower, maxSafeIntensity } from "./safety";
+import { MODE, minLB, maxPower } from "./safety";
+import Explanation from "./Explanation";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -304,6 +304,9 @@ export default function Calculator(props) {
                 variant="outlined"
                 label="Goggle Rating"
                 value={values.LB == null ? "" : `${values.mode} LB${values.LB}`}
+                InputProps={{
+                  readOnly: true
+                }}
               />
             </Grid>
 
@@ -335,86 +338,12 @@ export default function Calculator(props) {
                   <Typography>Explanation</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                  <MathJax.Provider>
-                    <Typography component="div">
-                      The laser{" "}
-                      {pulsed(values.mode, values.wavelength)
-                        ? "fluence"
-                        : "intensity"}{" "}
-                      for a{" "}
-                      {pulsed(values.mode, values.wavelength)
-                        ? "pulsed"
-                        : "continous wave"}{" "}
-                      laser is calculated assuming a Gaussian beam profile,
-                      <MathJax.Node
-                        formula={`I = \\frac{2 P}{\\pi w^2} = \\frac{8 P}{\\pi d^2},`}
-                      />
-                      where <MathJax.Node inline formula={"P"} /> is the{" "}
-                      {pulsed(values.mode, values.wavelength)
-                        ? "energy"
-                        : "power"}
-                      , and <MathJax.Node inline formula={"d = 2w"} /> is the{" "}
-                      <MathJax.Node inline formula={"1/e^2"} /> diameter. This
-                      value for <MathJax.Node inline formula={"d"} /> should be
-                      the diameter that might reasonably enter your eye. This
-                      value should be compared to the maximum safe{" "}
-                      {pulsed(values.mode, values.wavelength)
-                        ? "intensity"
-                        : "fluence"}{" "}
-                      <MathJax.Node inline formula={"I_\\text{safe}"} /> as
-                      specified by EN 207:2017. For a{" "}
-                      {values.mode == MODE.ContinuousWave ? "CW" : ""}
-                      {values.mode == MODE.Pulsed ? "long pulsed" : ""}
-                      {values.mode == MODE.GiantPulsed ? "pulsed" : ""}
-                      {values.mode == MODE.Modelocked
-                        ? "mode-locked pulsed"
-                        : ""}{" "}
-                      laser with wavelength of {values.wavelength} nm, this is{" "}
-                      {maxSafeIntensity(
-                        unit(values.wavelength, "nm"),
-                        values.mode
-                      ) == null
-                        ? "?"
-                        : maxSafeIntensity(
-                            unit(values.wavelength, "nm"),
-                            values.mode
-                          ).toNumber(
-                            pulsed(values.mode, values.wavelength)
-                              ? "J/m^2"
-                              : "W/m^2"
-                          )}{" "}
-                      {pulsed(values.mode, values.wavelength) ? "J/m²" : "W/m²"}
-                      . The optical density (
-                      <MathJax.Node inline formula={"\\text{OD}"} />) required
-                      to attenuate the laser{" "}
-                      {pulsed(values.mode, values.wavelength)
-                        ? "fluence"
-                        : "intensity"}{" "}
-                      to the maximum safe{" "}
-                      {pulsed(values.mode, values.wavelength)
-                        ? "fluence"
-                        : "intensity"}{" "}
-                      can be calculated according to
-                      <MathJax.Node
-                        formula={`\\text{OD} = log_{10}\\left(\\frac{I}{I_\\text{safe}}\\right).`}
-                      />
-                      Finally, the laser goggle scale number LB also requires
-                      that the filter not break or melt, and also specifies the
-                      type of laser. In this case, for a{" "}
-                      {values.mode == MODE.ContinuousWave ? "CW" : ""}
-                      {values.mode == MODE.Pulsed ? "long pulsed" : ""}
-                      {values.mode == MODE.GiantPulsed ? "pulsed" : ""}
-                      {values.mode == MODE.Modelocked
-                        ? "mode-locked pulsed"
-                        : ""}{" "}
-                      laser, this is{" "}
-                      <b>
-                        {values.LB == null
-                          ? "?"
-                          : `${values.mode} LB${values.LB}`}
-                      </b>
-                    </Typography>
-                  </MathJax.Provider>
+                  <Explanation
+                    pulsed={pulsed(values.mode, values.wavelength)}
+                    mode={values.mode}
+                    wavelength={values.wavelength}
+                    LB={values.LB}
+                  />
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             </Grid>
