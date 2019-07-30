@@ -46,12 +46,12 @@ export default function Explanation(props: ExplanationProps) {
               props.pulsed ? "J/m^2" : "W/m^2"
             )}{" "}
         {props.pulsed ? "J/m²" : "W/m²"}
-        .The optical density (
+        . The optical density (
         <MathJax.Node inline formula={"\\text{OD}"} />) required to attenuate
         the laser {intensity} to the maximum safe {intensity} can be calculated
         according to
         <MathJax.Node
-          formula={`\\text{OD} = log_{10}\\left(\\frac{I}{I_\\text{safe}}\\right).`}
+          formula={`\\text{OD} = \text{log}_{10}\\left(\\frac{I}{I_\\text{safe}}\\right).`}
         />
         Finally, the laser goggle scale number LB also requires that the filter
         not break or melt, and also specifies the type of laser. In this case,
