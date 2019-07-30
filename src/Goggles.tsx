@@ -99,7 +99,7 @@ function Goggle(props) {
             </Typography>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <Table>
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Wavelength</TableCell>
@@ -109,10 +109,10 @@ function Goggle(props) {
               <TableBody>
                 {props.wavelengths.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell align="left">
+                    <TableCell align="left" size="medium" padding="none">
                       {row.start}-{row.end} nm
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="right" size="small" padding="none">
                       {ratingString(row.rating)}
                     </TableCell>
                   </TableRow>
