@@ -22,6 +22,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { unit } from "mathjs";
 import { MODE, minLB, maxPower } from "./safety";
 import Explanation from "./Explanation";
+import Goggles from "./Goggles";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -342,6 +343,25 @@ export default function Calculator(props) {
                     pulsed={pulsed(values.mode, values.wavelength)}
                     mode={values.mode}
                     wavelength={values.wavelength}
+                    LB={values.LB}
+                  />
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </Grid>
+
+            <Grid item xs={12}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Recommended Goggles</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Goggles
+                    wavelength={values.wavelength}
+                    mode={values.mode}
                     LB={values.LB}
                   />
                 </ExpansionPanelDetails>

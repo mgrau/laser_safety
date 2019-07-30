@@ -1,0 +1,22 @@
+[
+  {
+    "name": "LG3",
+    "image": "LG3",
+    "wavelengths": [
+      { "start": 180, "end": 315, "rating": { "D": 7, "I": 4, "R": 4 } },
+      { "start": 315, "end": 532, "rating": { "D": 6, "I": 6, "R": 6, "M": 6 } }
+    ]
+  },
+  {
+    "name": "LG7",
+    "image": "LG7",
+    "wavelengths": [
+      { "start": 180, "end": 315, "rating": { "D": 6, "R": 4 } },
+      { "start": 315, "end": 400, "rating": { "D": 4, "R": 4 } },
+      { "start": 615, "end": 660, "rating": { "D": 3, "I": 3, "R": 3 } },
+      { "start": 660, "end": 665, "rating": { "D": 4, "I": 4, "R": 4 } },
+      { "start": 665, "end": 715, "rating": { "D": 4, "I": 5, "R": 5 } },
+      { "start": 694, "end": 694, "rating": { "I": 7, "R": 7 } }
+    ]
+  }
+]
