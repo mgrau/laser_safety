@@ -12,4 +12,4 @@ to install the dependant packages and start the development server. When you wan
 ```bash
 npm run deploy
 ```
-and then copy the files from root directory of the project to the root directory of where you want to server them from.
+to deploy to a personal github page.
