@@ -38,20 +38,20 @@ export default function Explanation(props: ExplanationProps) {
         <MathJax.Node inline formula={"d"} /> should be the diameter that might
         reasonably enter your eye. This value should be compared to the maximum
         safe {intensity} <MathJax.Node inline formula={"I_\\text{safe}"} /> as
-        specified by EN 207:2017. For a {ModeLongForm[props.mode]} laser with
+        specified by <a href="https://en.wikipedia.org/wiki/EN_207">EN 207:2017</a>. For a {ModeLongForm[props.mode]} laser with
         wavelength of {props.wavelength} nm, this is{" "}
         {maxSafeIntensity(unit(props.wavelength, "nm"), props.mode) == null
           ? "?"
           : maxSafeIntensity(unit(props.wavelength, "nm"), props.mode).toNumber(
-              props.pulsed ? "J/m^2" : "W/m^2"
-            )}{" "}
+            props.pulsed ? "J/m^2" : "W/m^2"
+          )}{" "}
         {props.pulsed ? "J/m²" : "W/m²"}
         . The optical density (
         <MathJax.Node inline formula={"\\text{OD}"} />) required to attenuate
         the laser {intensity} to the maximum safe {intensity} can be calculated
         according to
         <MathJax.Node
-          formula={`\\text{OD} = \text{log}_{10}\\left(\\frac{I}{I_\\text{safe}}\\right).`}
+          formula={`\\text{OD} = \\text{log}_{10}\\left(\\frac{I}{I_\\text{safe}}\\right).`}
         />
         Finally, the laser goggle scale number LB also requires that the filter
         not break or melt, and also specifies the type of laser. In this case,

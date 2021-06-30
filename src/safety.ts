@@ -103,5 +103,5 @@ export function minDiameter(
   mode: MODE
 ): math.Unit {
   const max_intensity = maxIntensity(wavelength, LB, mode);
-  return sqrt(divide(multiply(8 / pi, power) as math.Unit, max_intensity));
+  return sqrt(divide(multiply(8 / pi, power), max_intensity) as math.Unit);
 }

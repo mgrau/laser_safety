@@ -14,9 +14,9 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Link from "@material-ui/core/Link";
 
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import { unit } from "mathjs";
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Calculator(props) {
+export default function Calculator(props: {}) {
   const classes = useStyles(props);
 
   const url = queryString.parse(location.search);
@@ -330,42 +330,42 @@ export default function Calculator(props) {
             </Grid>
 
             <Grid item xs={12}>
-              <ExpansionPanel>
-                <ExpansionPanelSummary
+              <Accordion>
+                <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
                   <Typography>Explanation</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
+                </AccordionSummary>
+                <AccordionDetails>
                   <Explanation
                     pulsed={pulsed(values.mode, values.wavelength)}
                     mode={values.mode}
                     wavelength={values.wavelength}
                     LB={values.LB}
                   />
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
+                </AccordionDetails>
+              </Accordion>
             </Grid>
 
             <Grid item xs={12}>
-              <ExpansionPanel>
-                <ExpansionPanelSummary
+              <Accordion>
+                <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
                   <Typography>Recommended Goggles</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
+                </AccordionSummary>
+                <AccordionDetails>
                   <Goggles
                     wavelength={values.wavelength}
                     mode={values.mode}
                     LB={values.LB}
                   />
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
+                </AccordionDetails>
+              </Accordion>
             </Grid>
           </Grid>
         </Paper>
